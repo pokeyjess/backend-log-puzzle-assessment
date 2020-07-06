@@ -1,5 +1,7 @@
 #!/usr/bin/env python2
 """
+python logpuzzle.py animal_code.google.com
+
 Log Puzzle exercise
 
 Copyright 2010 Google Inc.
@@ -29,17 +31,14 @@ def read_urls(filename):
     Screens out duplicate urls and returns the urls sorted into
     increasing order."""
 
-    domain = "http://" + filename.split("_")[1]
-
     urls = set()
-    photos = re.findall(r'GET \/(.*?\.jpg)', open(filename).read())
-    photos = re.findall(r'GET (\/.*?\.jpg)', open(filename).read())
-
+    with open(filename) as f:
+        file = f.read()
+    photos = re.findall(r'GET \/(.*?\.jpg)', file)
     for photo in photos:
-        urls.add(domain + photo)
-    return sorted(urls)
-
-# remove duplicates, regular expression
+        urls.add(photo)
+    urls_list = set(urls)
+    return sorted(urls_list)
 
 
 def download_images(img_urls, dest_dir):
@@ -51,6 +50,7 @@ def download_images(img_urls, dest_dir):
     Creates the directory if necessary.
     """
     # +++your code here+++
+    # create a bunch of image tags, use Firefox?
     pass
 
 
@@ -76,10 +76,10 @@ def main(args):
 
     img_urls = read_urls(parsed_args.logfile)
 
-    if parsed_args.todir:
-        download_images(img_urls, parsed_args.todir)
-    else:
-        print('\n'.join(img_urls))
+    # if parsed_args.todir:
+    #download_images(img_urls, parsed_args.todir)
+    # else:
+    print('\n'.join(img_urls))
 
 
 if __name__ == '__main__':
