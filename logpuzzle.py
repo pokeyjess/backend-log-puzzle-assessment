@@ -26,17 +26,14 @@ import urllib.request
 
 
 def read_urls(filename):
-    server = "http://" + filename.split("_")[1]
     urls = set()
     with open(filename) as f:
         file = f.read()
     photos = re.findall(r'GET \/(.*?\.jpg)', file)
     for photo in photos:
-        urls.add(server + "/" + photo)
+        urls.add("http://" + filename.split("_")[1] + "/" + photo)
     urls_list = set(urls)
     return sorted(urls_list)
-
-# server is whatever follows first underscore
 
 
 def download_images(img_urls, dest_dir):
