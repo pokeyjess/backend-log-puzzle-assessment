@@ -26,19 +26,17 @@ import urllib.request
 
 
 def read_urls(filename):
-    """Returns a list of the puzzle urls from the given log file,
-    extracting the hostname from the filename itself.
-    Screens out duplicate urls and returns the urls sorted into
-    increasing order."""
-
+    server = "http://" + filename.split("_")[1]
     urls = set()
     with open(filename) as f:
         file = f.read()
     photos = re.findall(r'GET \/(.*?\.jpg)', file)
     for photo in photos:
-        urls.add(photo)
+        urls.add(server + "/" + photo)
     urls_list = set(urls)
     return sorted(urls_list)
+
+# server is whatever follows first underscore
 
 
 def download_images(img_urls, dest_dir):
@@ -51,6 +49,10 @@ def download_images(img_urls, dest_dir):
     """
     # +++your code here+++
     # create a bunch of image tags, use Firefox?
+    # tag_summary
+    # 1:50 in regex study hall. repo, tag summary
+    # use with open, create new .html file with filename, write in img tags
+
     pass
 
 
@@ -77,7 +79,7 @@ def main(args):
     img_urls = read_urls(parsed_args.logfile)
 
     # if parsed_args.todir:
-    #download_images(img_urls, parsed_args.todir)
+    # download_images(img_urls, parsed_args.todir)
     # else:
     print('\n'.join(img_urls))
 
