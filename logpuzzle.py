@@ -37,20 +37,42 @@ def read_urls(filename):
 
 
 def download_images(img_urls, dest_dir):
-    """Given the URLs already in the correct order, downloads
-    each image into the given directory.
-    Gives the images local filenames img0, img1, and so on.
-    Creates an index.html in the directory with an <img> tag
-    to show each local image file.
-    Creates the directory if necessary.
-    """
-    # +++your code here+++
-    # create a bunch of image tags, use Firefox?
-    # tag_summary
-    # 1:50 in regex study hall. repo, tag summary
-    # use with open, create new .html file with filename, write in img tags
 
-    pass
+    # 1. make directory
+    # 2. retrieve url
+    # 3. loop through and change names
+    # 4. open/create html file
+    # 5. add tags, img names, closing tags
+    # 6. add html file to directory
+
+    if not os.path.exists(dest_dir):
+        os.makedirs(dest_dir)
+    # make new directory
+
+    with open('index.html', 'w') as file:
+        file.write('<html><body>\n')
+    # create html file to write to
+    # write opening tags
+
+    # adds html file to directory
+    os.path.join(dest_dir, 'index.html')
+
+    # change name to img1, img2 etc.
+    i = 0
+    for img_url in img_urls:
+        image_name = 'img%d' % i
+        # assigns number to img
+
+        file.write('<img src="%s">' % (image_name))
+        # assigns new img name to tag
+        i += 1
+
+    urllib.request.urlretrieve(img_url, os.path.join(dest_dir, image_name))
+    # urllib.urlretrieve()
+    # urllib.request.urlopen
+
+    # add closing tag
+    file.write('\n</body></html>\n')
 
 
 def create_parser():
@@ -75,10 +97,10 @@ def main(args):
 
     img_urls = read_urls(parsed_args.logfile)
 
-    # if parsed_args.todir:
-    # download_images(img_urls, parsed_args.todir)
-    # else:
-    print('\n'.join(img_urls))
+    if parsed_args.todir:
+        download_images(img_urls, parsed_args.todir)
+    else:
+        print('\n'.join(img_urls))
 
 
 if __name__ == '__main__':
