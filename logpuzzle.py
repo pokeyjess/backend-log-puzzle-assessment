@@ -2,6 +2,7 @@
 """
 python logpuzzle.py animal_code.google.com --todir puzzle
 
+
 Log Puzzle exercise
 
 Copyright 2010 Google Inc.
@@ -16,7 +17,7 @@ HTTP/1.0" 302 528 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US;
 rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6"
 """
 
-__author__ = 'pokeyjess'
+__author__ = 'pokeyjess with help from Google searches'
 
 import argparse
 import os
@@ -44,7 +45,7 @@ def download_images(img_urls, dest_dir):
         image_name = 'img%d' % i
         print('Retrieving...' + image_name)
         urlretrieve(url, dest_dir + "/" + image_name)
-        file += '<img src={}></img>'.format(image_name)
+        file += '<img src="%s"></img>' % (image_name)
     file += '\n\t</body>\n</html>'
     with open(dest_dir + '/index.html', 'w') as f:
         f.write(file)
@@ -52,17 +53,14 @@ def download_images(img_urls, dest_dir):
 
 
 def create_parser():
-    """Creates an argument parser object."""
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--todir',
                         help='destination directory for downloaded images')
     parser.add_argument('logfile', help='apache logfile to extract urls from')
-
     return parser
 
 
 def main(args):
-    """Parses args, scans for URLs, gets images from URLs."""
     parser = create_parser()
 
     if not args:
