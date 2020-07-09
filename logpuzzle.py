@@ -1,21 +1,11 @@
-#!/usr/bin/env python2
-"""
-python logpuzzle.py animal_code.google.com --todir puzzle
+#!/usr/bin/python
+# Copyright 2010 Google Inc.
+# Licensed under the Apache License, Version 2.0
+# http://www.apache.org/licenses/LICENSE-2.0
 
+# Google's Python Class
+# http://code.google.com/edu/languages/google-python-class/
 
-Log Puzzle exercise
-
-Copyright 2010 Google Inc.
-Licensed under the Apache License, Version 2.0
-http://www.apache.org/licenses/LICENSE-2.0
-
-Given an Apache logfile, find the puzzle URLs and download the images.
-
-Here's what a puzzle URL looks like (spread out onto multiple lines):
-10.254.254.28 - - [06/Aug/2007:00:13:48 -0700] "GET /~foo/puzzle-bar-aaab.jpg
-HTTP/1.0" 302 528 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US;
-rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6"
-"""
 
 __author__ = 'pokeyjess with help from Google searches'
 
