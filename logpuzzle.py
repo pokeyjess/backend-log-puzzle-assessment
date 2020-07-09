@@ -1,6 +1,6 @@
 #!/usr/bin/env python2
 """
-python logpuzzle.py animal_code.google.com
+python logpuzzle.py animal_code.google.com --todir puzzle
 
 Log Puzzle exercise
 
@@ -22,7 +22,7 @@ import argparse
 import os
 import re
 import sys
-import urllib.request
+from urllib.request import urlretrieve
 
 
 def read_urls(filename):
@@ -37,42 +37,18 @@ def read_urls(filename):
 
 
 def download_images(img_urls, dest_dir):
-
-    # 1. make directory
-    # 2. retrieve url
-    # 3. loop through and change names
-    # 4. open/create html file
-    # 5. add tags, img names, closing tags
-    # 6. add html file to directory
-
     if not os.path.exists(dest_dir):
         os.makedirs(dest_dir)
-    # make new directory
-
-    with open('index.html', 'w') as file:
-        file.write('<html><body>\n')
-    # create html file to write to
-    # write opening tags
-
-    # adds html file to directory
-    os.path.join(dest_dir, 'index.html')
-
-    # change name to img1, img2 etc.
-    i = 0
-    for img_url in img_urls:
+    file = '<html>\n\t<body>\n\t\t'
+    for i, url in enumerate(img_urls):
         image_name = 'img%d' % i
-        # assigns number to img
-
-        file.write('<img src="%s">' % (image_name))
-        # assigns new img name to tag
-        i += 1
-
-    urllib.request.urlretrieve(img_url, os.path.join(dest_dir, image_name))
-    # urllib.urlretrieve()
-    # urllib.request.urlopen
-
-    # add closing tag
-    file.write('\n</body></html>\n')
+        print('Retrieving...' + image_name)
+        urlretrieve(url, dest_dir + "/" + image_name)
+        file += '<img src={}></img>'.format(image_name)
+    file += '\n\t</body>\n</html>'
+    with open(dest_dir + '/index.html', 'w') as f:
+        f.write(file)
+    print("Download complete")
 
 
 def create_parser():
