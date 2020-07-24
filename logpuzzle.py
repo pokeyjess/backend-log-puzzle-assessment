@@ -6,8 +6,10 @@
 # Google's Python Class
 # http://code.google.com/edu/languages/google-python-class/
 
+# python logpuzzle.py animal_code.google.com --todir test
 
-__author__ = 'pokeyjess with help from Google searches'
+
+__author__ = 'pokeyjess with help from Google searches and JT'
 
 import argparse
 import os
@@ -20,11 +22,12 @@ def read_urls(filename):
     urls = set()
     with open(filename) as f:
         file = f.read()
-    photos = re.findall(r'GET \/(.*?\.jpg)', file)
+    photos = re.findall(r'\S+puzzle+\S+', file)
     for photo in photos:
+        print(photo)
         urls.add("http://" + filename.split("_")[1] + "/" + photo)
     urls_list = set(urls)
-    return sorted(urls_list)
+    return sorted(urls_list, key=lambda url: url[-8:-4])
 
 
 def download_images(img_urls, dest_dir):
@@ -32,7 +35,8 @@ def download_images(img_urls, dest_dir):
         os.makedirs(dest_dir)
     file = '<html>\n\t<body>\n\t\t'
     for i, url in enumerate(img_urls):
-        image_name = 'img%d' % i
+        image_name = 'img%d.jpg' % i  # f-strings
+        print(url)
         print('Retrieving...' + image_name)
         urlretrieve(url, dest_dir + "/" + image_name)
         file += '<img src="%s"></img>' % (image_name)
